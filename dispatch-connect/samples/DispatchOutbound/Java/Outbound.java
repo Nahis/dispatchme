@@ -56,7 +56,7 @@ public class DispatchOutbound {
                     {
                         JobJson payload = m.Request.Payload.Actions.get(0).Put.job;
                         ////////////////////////////////////////////////////////////
-                        //  DO SOMETHING HERE WITH THE PAYLOAD - update your system!
+                        // Download the payload for subsequent processing to your system
                         ////////////////////////////////////////////////////////////
                     }
                     catch (Exception e)

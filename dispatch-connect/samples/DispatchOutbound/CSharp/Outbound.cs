@@ -137,7 +137,7 @@ namespace DispatchConnect
                     {
                         JobJson payload = m.Request.Payload.Actions[0].Put.Job;
                         ////////////////////////////////////////////////////////////
-                        //  DO SOMETHING HERE WITH THE PAYLOAD - update your system!
+                        // Download the payload for subsequent processing to your system
                         ////////////////////////////////////////////////////////////
                     }
                     catch (Exception e)

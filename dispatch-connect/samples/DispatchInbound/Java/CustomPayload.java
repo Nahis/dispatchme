@@ -34,7 +34,7 @@ public class DispatchInbound {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("RecordType", "job");               // The would be `organization`, `user` etc. (any identify value is acceptable) depending on what you're trying to send over. Refer to the playbook
+            con.setRequestProperty("RecordType", "job");               // The would be `organization`, `user` etc. (any identifying value is acceptable) depending on what you're trying to send over. Refer to the playbook
             con.setRequestProperty("X-Dispatch-Key", PublicKey);
             con.setRequestProperty("X-Dispatch-Signature", XDispatchSignature);
             con.setDoOutput(true);

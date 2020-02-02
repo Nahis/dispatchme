@@ -31,7 +31,7 @@ while msgs:
             req_type = m['Request']['Type']
             payload = m['Request']['Payload']
             ##########################################################
-            # DO SOMETHING HERE WITH THE PAYLOAD - update your system!
+            # Download the payload for subsequent processing to your system
             ##########################################################
         except Exception as e:
             ret = 'error'
