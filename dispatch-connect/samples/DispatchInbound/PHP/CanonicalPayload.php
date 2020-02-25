@@ -1,7 +1,7 @@
 <?php
 
 $key = 'your_public_key';
-$secert = 'your_secret_key';
+$secret = 'your_secret_key';
 $payloadData = '[
     {
         "header":{
@@ -66,8 +66,8 @@ $payloadData = '[
     }
 ]';
 $compressed = gzencode(utf8_encode(json_encode($payloadData)));
-$secert = hex2bin($secert);
-$sign = hash_hmac('sha256', $compressed, $secert, true);
+$secret = hex2bin($secret);
+$sign = hash_hmac('sha256', $compressed, $secret, true);
 $sign = utf8_decode(bin2hex($sign));
 $curl = curl_init();
 curl_setopt_array($curl, array(
