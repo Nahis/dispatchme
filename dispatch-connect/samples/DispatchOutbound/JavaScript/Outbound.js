@@ -2,9 +2,6 @@ var http = require('http');
 http.createServer(function (req, res) {
 }).listen(1337, "127.0.0.1");
 
-var zlib = require('zlib');
-var crypto = require('crypto');
-
 var key = 'your_key';
 var secret = 'your_secret';
 var url = 'https://connect-sbx.dispatch.me/';
@@ -12,14 +9,13 @@ var method = 'POST';
 var max_messages = 10;
 var out_payload = `{"maxNumberOfMessages":${max_messages}}`;
 var secret = Buffer.from(secret, 'hex');
+const crypto = require('crypto');
 var out_signature = crypto.createHmac('sha256', secret).update(out_payload, 'utf8').digest('hex');
 var out_headers = {
   'Content-Type': 'application/json',
   'X-Dispatch-Key': key,
   'X-Dispatch-Signature': out_signature
 };
-
-const request = require('request');
 
 var out_request = {
     url: url + 'agent/out',
@@ -28,7 +24,8 @@ var out_request = {
     body: out_payload
 };
 
-var req = request(out_request, function(err, res, body) {
+const request = require('request');
+request(out_request, function(err, res, body) {
     var msgs = JSON.parse(body);
     if (msgs.length) { 
         msgs.forEach(msg => {
