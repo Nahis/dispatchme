@@ -28,9 +28,8 @@ var out_request = {
     body: out_payload
 };
 
-var msgs;
 var req = request(out_request, function(err, res, body) {
-    msgs = JSON.parse(body);
+    var msgs = JSON.parse(body);
     if (msgs.length) { 
         msgs.forEach(msg => {
             var m = msg.Message;
@@ -74,10 +73,10 @@ var req = request(out_request, function(err, res, body) {
                 body: out_payload
             };                
             request(out_request, function(err, res, body) {
-                let msgs = JSON.parse(body);
+                msgs = JSON.parse(body);
             });
         } else {
-            msgs = null;
+            msgs = [];
         }
     }
 });
