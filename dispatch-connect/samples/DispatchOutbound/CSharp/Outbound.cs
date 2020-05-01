@@ -131,13 +131,12 @@ namespace DispatchConnect
                 foreach (AgentOutJson rec in agentOut)
                 {
                     m = rec.Message;
-                    String ret = "Success";
                     JobJson payload = m.Request.Payload.Actions[0].Put.Job;
                     // ##########################################################
                     // Download the payload for subsequent processing to your system
                     // VERY IMPORTANT: This operation should take a few millisecs for each record - if it will take more please reach out to your Dispatch contact
                     // ##########################################################
-                    String receipt = string.Format("{0}\"Receipt\":\"{1}\",\"ProcedureID\":\"{2}\",\"Result\":\"{3}\"{5}", "{", m.Receipt, m.Request.ProcedureID, ret, "}");
+                    String receipt = string.Format("{0}\"Receipt\":\"{1}\",\"ProcedureID\":\"{2}\",\"Result\":\"Success\"{4}", "{", m.Receipt, m.Request.ProcedureID, "}");
                     byte[] bReceipt = Encoding.UTF8.GetBytes(receipt);
                     String AckSignature = GetSignatureHash(mysecretyKey, bReceipt);
                     HttpWebRequest AgentAckEndPoint = (HttpWebRequest)HttpWebRequest.Create("https://connect-sbx.dispatch.me/agent/ack");

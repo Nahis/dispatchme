@@ -33,8 +33,8 @@ while msgs:
         ##########################################################
 
         # After processing the message post acknowledgement
-        receipt = '{"Receipt":"%s","ProcedureID":"%s","Result":"%s"}' % \
-                  (m['Receipt'], m['Request']['ProcedureID'], 'success')
+        receipt = '{"Receipt":"%s","ProcedureID":"%s","Result":"success"}' % \
+                  (m['Receipt'], m['Request']['ProcedureID'])
         receipt = receipt.encode('utf-8')
         # Calculate the hash and assign to HTTP header
         digester = hmac.new(b_secret_key, receipt, hashlib.sha256)

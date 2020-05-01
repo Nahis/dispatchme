@@ -50,13 +50,12 @@ public class DispatchOutbound {
                 numRecs = AgentOut.length;
                 for (AgentOutJson rec : AgentOut) {
                     m = rec.Message;
-                    String ret = "Success";
                     JobJson payload = m.Request.Payload.Actions.get(0).Put.job;
                     // ##########################################################
                     // Download the payload for subsequent processing to your system
                     // VERY IMPORTANT: This operation should take a few millisecs for each record - if it will take more please reach out to your Dispatch contact
                     // ##########################################################
-                    String receipt = String.format("%s\"Receipt\":\"%s\",\"ProcedureID\":\"%s\",\"Result\":\"%s\"%s", "{", m.Receipt, m.Request.ProcedureID, ret, "}");
+                    String receipt = String.format("%s\"Receipt\":\"%s\",\"ProcedureID\":\"%s\",\"Result\":\"Success\"%s", "{", m.Receipt, m.Request.ProcedureID, "}");
                     byte[] bReceipt = receipt.getBytes(java.nio.charset.StandardCharsets.UTF_8);
                     String AckSignature = GetSignatureHash(bSecretKey, bReceipt);
 
