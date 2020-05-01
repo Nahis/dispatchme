@@ -36,7 +36,8 @@ while (!empty($outResults)) {
               $procID = $m['Request']['ProcedureID'];
               
               ##########################################################
-              # Download the payload for subsequent processing to your system
+              # Download the payload for subsequent processing to your system. 
+              # VERY IMPORTANT: This operation should take a few millisecs for each record - if it will take more please reach out to your Dispatch contact
               ##########################################################
               
               # After processing the message post acknowledgement

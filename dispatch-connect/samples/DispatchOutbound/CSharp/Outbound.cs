@@ -133,9 +133,10 @@ namespace DispatchConnect
                     m = rec.Message;
                     String ret = "Success";
                     JobJson payload = m.Request.Payload.Actions[0].Put.Job;
-                    ////////////////////////////////////////////////////////////
+                    // ##########################################################
                     // Download the payload for subsequent processing to your system
-                    ////////////////////////////////////////////////////////////
+                    // VERY IMPORTANT: This operation should take a few millisecs for each record - if it will take more please reach out to your Dispatch contact
+                    // ##########################################################
                     String receipt = string.Format("{0}\"Receipt\":\"{1}\",\"ProcedureID\":\"{2}\",\"Result\":\"{3}\"{5}", "{", m.Receipt, m.Request.ProcedureID, ret, "}");
                     byte[] bReceipt = Encoding.UTF8.GetBytes(receipt);
                     String AckSignature = GetSignatureHash(mysecretyKey, bReceipt);

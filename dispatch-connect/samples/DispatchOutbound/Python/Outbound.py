@@ -24,16 +24,17 @@ msgs = json.loads(out_response.text)
 while msgs:
     for msg in msgs:
         m = msg['Message']
-        ret = 'success'
-        # Retrieve message type and payload
         req_type = m['Request']['Type']
         payload = m['Request']['Payload']
+        
         ##########################################################
         # Download the payload for subsequent processing to your system
+        # VERY IMPORTANT: This operation should take a few millisecs for each record - if it will take more please reach out to your Dispatch contact
         ##########################################################
+
         # After processing the message post acknowledgement
         receipt = '{"Receipt":"%s","ProcedureID":"%s","Result":"%s"}' % \
-                  (m['Receipt'], m['Request']['ProcedureID'], ret)
+                  (m['Receipt'], m['Request']['ProcedureID'], 'success')
         receipt = receipt.encode('utf-8')
         # Calculate the hash and assign to HTTP header
         digester = hmac.new(b_secret_key, receipt, hashlib.sha256)
