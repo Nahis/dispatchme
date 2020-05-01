@@ -132,36 +132,23 @@ namespace DispatchConnect
                 {
                     m = rec.Message;
                     String ret = "Success";
-                    String err = "";
-                    try
-                    {
-                        JobJson payload = m.Request.Payload.Actions[0].Put.Job;
-                        ////////////////////////////////////////////////////////////
-                        // Download the payload for subsequent processing to your system
-                        ////////////////////////////////////////////////////////////
-                    }
-                    catch (Exception e)
-                    {
-                        ret = "error";
-                        err = e.Message;
-                    }
-                    finally
-                    {
-                        String receipt = string.Format("{0}\"Receipt\":\"{1}\",\"ProcedureID\":\"{2}\",\"Result\":\"{3}\",\"Error\":\"{4}\"{5}", "{", m.Receipt, m.Request.ProcedureID, ret, err, "}");
-                        byte[] bReceipt = Encoding.UTF8.GetBytes(receipt);
-                        String AckSignature = GetSignatureHash(mysecretyKey, bReceipt);
-                        HttpWebRequest AgentAckEndPoint = (HttpWebRequest)HttpWebRequest.Create("https://connect-sbx.dispatch.me/agent/ack");
-                        AgentAckEndPoint.Method = "POST";
-                        AgentAckEndPoint.Headers.Add("X-Dispatch-Signature", AckSignature);
-                        AgentAckEndPoint.Headers.Add("X-Dispatch-Key", PublicKey);
-                        AgentAckEndPoint.ContentType = "application/json";
-                        Stream ackStream = AgentAckEndPoint.GetRequestStream();
-                        ackStream.Write(bReceipt, 0, bReceipt.Length);
-                        HttpWebResponse ResponseAgentAck = (HttpWebResponse)AgentAckEndPoint.GetResponse();
-                        Stream receiveAckStream = ResponseAgentAck.GetResponseStream();
-                        StreamReader readAckstream = new StreamReader(receiveAckStream, Encoding.UTF8);
-                    }
-
+                    JobJson payload = m.Request.Payload.Actions[0].Put.Job;
+                    ////////////////////////////////////////////////////////////
+                    // Download the payload for subsequent processing to your system
+                    ////////////////////////////////////////////////////////////
+                    String receipt = string.Format("{0}\"Receipt\":\"{1}\",\"ProcedureID\":\"{2}\",\"Result\":\"{3}\"{5}", "{", m.Receipt, m.Request.ProcedureID, ret, "}");
+                    byte[] bReceipt = Encoding.UTF8.GetBytes(receipt);
+                    String AckSignature = GetSignatureHash(mysecretyKey, bReceipt);
+                    HttpWebRequest AgentAckEndPoint = (HttpWebRequest)HttpWebRequest.Create("https://connect-sbx.dispatch.me/agent/ack");
+                    AgentAckEndPoint.Method = "POST";
+                    AgentAckEndPoint.Headers.Add("X-Dispatch-Signature", AckSignature);
+                    AgentAckEndPoint.Headers.Add("X-Dispatch-Key", PublicKey);
+                    AgentAckEndPoint.ContentType = "application/json";
+                    Stream ackStream = AgentAckEndPoint.GetRequestStream();
+                    ackStream.Write(bReceipt, 0, bReceipt.Length);
+                    HttpWebResponse ResponseAgentAck = (HttpWebResponse)AgentAckEndPoint.GetResponse();
+                    Stream receiveAckStream = ResponseAgentAck.GetResponseStream();
+                    StreamReader readAckstream = new StreamReader(receiveAckStream, Encoding.UTF8);
                 }
             } while (numRecs >= 10);
         }

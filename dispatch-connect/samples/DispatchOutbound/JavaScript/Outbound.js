@@ -38,7 +38,7 @@ request(out_request, function(err, res, body) {
             # Download the payload for subsequent processing to your system
             ##########################################################
             */
-            var receipt = `{"Receipt":"${m.Receipt}","ProcedureID":"${m.Request.ProcedureID}","Result":"success","Error":""}`;
+            var receipt = `{"Receipt":"${m.Receipt}","ProcedureID":"${m.Request.ProcedureID}","Result":"success"}`;
             receipt = unescape(encodeURIComponent(receipt));
             var ack_signature = crypto.createHmac('sha256', secret).update(receipt, 'utf8').digest('hex');
             var ack_headers ={

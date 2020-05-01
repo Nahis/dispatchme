@@ -51,36 +51,24 @@ public class DispatchOutbound {
                 for (AgentOutJson rec : AgentOut) {
                     m = rec.Message;
                     String ret = "Success";
-                    String err = "";
-                    try
-                    {
-                        JobJson payload = m.Request.Payload.Actions.get(0).Put.job;
-                        ////////////////////////////////////////////////////////////
-                        // Download the payload for subsequent processing to your system
-                        ////////////////////////////////////////////////////////////
-                    }
-                    catch (Exception e)
-                    {
-                        ret = "error";
-                        err = e.getMessage();
-                    }
-                    finally
-                    {
-                        String receipt = String.format("%s\"Receipt\":\"%s\",\"ProcedureID\":\"%s\",\"Result\":\"%s\",\"Error\":\"%s\"%s", "{", m.Receipt, m.Request.ProcedureID, ret, err, "}");
-                        byte[] bReceipt = receipt.getBytes(java.nio.charset.StandardCharsets.UTF_8);
-                        String AckSignature = GetSignatureHash(bSecretKey, bReceipt);
+                    JobJson payload = m.Request.Payload.Actions.get(0).Put.job;
+                    ////////////////////////////////////////////////////////////
+                    // Download the payload for subsequent processing to your system
+                    ////////////////////////////////////////////////////////////
+                    String receipt = String.format("%s\"Receipt\":\"%s\",\"ProcedureID\":\"%s\",\"Result\":\"%s\"%s", "{", m.Receipt, m.Request.ProcedureID, ret, "}");
+                    byte[] bReceipt = receipt.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                    String AckSignature = GetSignatureHash(bSecretKey, bReceipt);
 
-                        HttpURLConnection AgentAckEndPoint = (HttpURLConnection) new URL("https://connect-sbx.dispatch.me/agent/ack").openConnection();
-                        AgentAckEndPoint.setRequestMethod("POST");
-                        AgentAckEndPoint.setRequestProperty("Content-Type", "application/json");
-                        AgentAckEndPoint.setRequestProperty("X-Dispatch-Key", PublicKey);
-                        AgentAckEndPoint.setRequestProperty("X-Dispatch-Signature", AckSignature);
-                        AgentAckEndPoint.setDoOutput(true);
+                    HttpURLConnection AgentAckEndPoint = (HttpURLConnection) new URL("https://connect-sbx.dispatch.me/agent/ack").openConnection();
+                    AgentAckEndPoint.setRequestMethod("POST");
+                    AgentAckEndPoint.setRequestProperty("Content-Type", "application/json");
+                    AgentAckEndPoint.setRequestProperty("X-Dispatch-Key", PublicKey);
+                    AgentAckEndPoint.setRequestProperty("X-Dispatch-Signature", AckSignature);
+                    AgentAckEndPoint.setDoOutput(true);
 
-                        DataOutputStream AgentAckStream = new DataOutputStream(AgentAckEndPoint.getOutputStream());
-                        AgentAckStream.write(bReceipt);
-                        // System.out.println(AgentAckEndPoint.getResponseMessage());
-                    }
+                    DataOutputStream AgentAckStream = new DataOutputStream(AgentAckEndPoint.getOutputStream());
+                    AgentAckStream.write(bReceipt);
+                    // System.out.println(AgentAckEndPoint.getResponseMessage());
                 }
             } while (numRecs >= 10);
             AgentOutStream.flush();
