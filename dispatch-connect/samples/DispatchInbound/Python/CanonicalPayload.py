@@ -8,7 +8,8 @@ ENV = '-sbx'    # for production you can just set this to '' i.e. production API
 SECRET_KEY = 'your_secret_key'
 HEADERS = {
     'Content-Type': 'application/json',
-    'X-Dispatch-Key': 'your_public_key'
+    'X-Dispatch-Key': 'your_public_key',
+    'MessageId': 'unique_id_for_transaction'  # optional
 }
 
 # The `record_type` would be `organization`, `user` depending on what you're trying to send over. Refer to the playbook

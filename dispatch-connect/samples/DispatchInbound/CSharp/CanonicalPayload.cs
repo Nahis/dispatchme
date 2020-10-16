@@ -69,6 +69,7 @@ namespace DispatchConnect
             WR.Method = "POST";
             WR.Headers.Add("X-Dispatch-Signature", XDispatchSignature);
             WR.Headers.Add("X-Dispatch-Key", PublicKey);
+            WR.Headers.Add("MessageId", "unique_id_for_transaction");  // optional
             WR.ContentType = "application/json";
             Stream stream = WR.GetRequestStream();
             stream.Write(gZipPayload, 0, gZipPayload.Length);

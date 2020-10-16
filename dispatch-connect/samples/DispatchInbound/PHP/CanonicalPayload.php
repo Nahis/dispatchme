@@ -83,7 +83,8 @@ curl_setopt_array($curl, array(
     CURLOPT_HTTPHEADER => array(
         "Content-Type: application/json",
         "X-Dispatch-Key: $key",
-        "X-Dispatch-Signature: $sign"
+        "X-Dispatch-Signature: $sign",
+        "MessageId": "unique_id_for_transaction"  // optional
     ),
 ));
 $response = curl_exec($curl);

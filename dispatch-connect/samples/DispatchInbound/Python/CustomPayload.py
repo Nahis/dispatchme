@@ -9,6 +9,7 @@ SECRET_KEY = 'your_secret_key'
 HEADERS = {
     'Content-Type': 'application/json',
     'X-Dispatch-Key': 'your_public_key',
+    'MessageId': 'unique_id_for_transaction'  # optional    
     'RecordType': 'job' # The would be `organization`, `user` etc. (any identify value is acceptable) depending on what you're trying to send over. Refer to the playbook
 }
 

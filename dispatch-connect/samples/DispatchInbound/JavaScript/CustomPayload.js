@@ -13,5 +13,6 @@ function post() {
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.setRequestHeader("X-Dispatch-Key", key);
     xhttp.setRequestHeader("X-Dispatch-Signature", signature);
+    xhttp.setRequestHeader("MessageId", "unique_id_for_transaction");  // optional
     xhttp.send(payload);    
 }

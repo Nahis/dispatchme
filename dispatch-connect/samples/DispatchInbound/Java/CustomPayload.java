@@ -37,6 +37,7 @@ public class DispatchInbound {
             con.setRequestProperty("RecordType", "job");               // The would be `organization`, `user` etc. (any identifying value is acceptable) depending on what you're trying to send over. Refer to the playbook
             con.setRequestProperty("X-Dispatch-Key", PublicKey);
             con.setRequestProperty("X-Dispatch-Signature", XDispatchSignature);
+            con.setRequestProperty("MessageId", "unique_id_for_transaction");  // optional            
             con.setDoOutput(true);
             DataOutputStream gzipOutputStream = new DataOutputStream(con.getOutputStream());
             gzipOutputStream.write(gZipPayload);

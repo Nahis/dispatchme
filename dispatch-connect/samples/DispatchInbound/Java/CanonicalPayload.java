@@ -73,6 +73,7 @@ public class DispatchInbound {
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("X-Dispatch-Key", PublicKey);
             con.setRequestProperty("X-Dispatch-Signature", XDispatchSignature);
+            con.setRequestProperty("MessageId", "unique_id_for_transaction");  // optional
             con.setDoOutput(true);
             DataOutputStream gzipOutputStream = new DataOutputStream(con.getOutputStream());
             gzipOutputStream.write(gZipPayload);

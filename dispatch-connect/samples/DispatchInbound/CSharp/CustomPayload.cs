@@ -31,6 +31,7 @@ namespace DispatchConnect
             WR.Headers.Add("X-Dispatch-Signature", XDispatchSignature);
             WR.Headers.Add("RecordType", "job");             // The would be `organization`, `user` etc. (any identify value is acceptable) depending on what you're trying to send over. Refer to the playbook
             WR.Headers.Add("X-Dispatch-Key", PublicKey);
+            WR.Headers.Add("MessageId", "unique_id_for_transaction");  // optional
             WR.ContentType = "application/json";
             Stream stream = WR.GetRequestStream();
             stream.Write(gZipPayload, 0, gZipPayload.Length);
