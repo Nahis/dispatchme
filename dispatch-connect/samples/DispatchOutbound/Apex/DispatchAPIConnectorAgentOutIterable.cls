@@ -22,6 +22,8 @@ public class DispatchAPIConnectorAgentOutIterable implements Iterator<DispatchAP
     }   
  
     public boolean hasNext() {
+        if (i > 50) {  // to limit the number of API calls so that it remains within governor limits
+            return False;
         HttpResponse out_response = http.send(out_request);
         recs = get_recs(out_response); 
         for (DispatchAPIConnectorAgentOut.DispatchAPIObject rec : recs.Messages) {
@@ -29,11 +31,7 @@ public class DispatchAPIConnectorAgentOutIterable implements Iterator<DispatchAP
             HttpRequest ack_request = prepareConnectorHttpRequest(this.publicKey, this.secret, payload, this.endpoint + 'ack');
             HttpResponse ack_response = http.send(ack_request);
         }
-        if (i < 50) {  // to limit the number of API calls so that it remains within governor limits
-            return recs.Messages.size() > 0;
-        } else {
-           return False;
-        }
+        return recs.Messages.size() > 0;
     }
  
     public DispatchAPIConnectorAgentOut.DispatchAPIResponse next() {
