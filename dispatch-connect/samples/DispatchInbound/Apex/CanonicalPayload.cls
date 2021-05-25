@@ -67,7 +67,7 @@ public class DispatchConnectInbound {
         	request.setHeader('X-Dispatch-Key',publicKey);
         	request.setHeader('X-Dispatch-Signature',signatureHex);
             request.setHeader("MessageId", "unique_id_for_transaction");  // optional
-            request.setHeader('Content-Encoding', 'gzip');
+            request.setHeader('Accept-Encoding', 'gzip');
             request.setBody(data);        
         	request.setMethod('POST');
         	request.setEndpoint(endpoint);
