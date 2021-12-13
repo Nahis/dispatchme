@@ -7,18 +7,17 @@ import hmac
 import hashlib
 import gzip
 
-#  Make sure to change the external_id for every run. Otherwise when
+#  Make sure to change the brand_job_id for every run. Otherwise when
 #  you run again, it will update rather than insert a new record
-external_id = "some_unique_id"
+brand_job_id = "some_unique_id"
 
-
+# the next two are values you need to update only once when you start testing
+test_data_generation_key = "account_key"
 test_org_id = 00000
 
-# The next two lines are to generate test data for your testing. DO NOT CHANGE these values - these are for simulating what the brand (e.g. AHS) 
-# will send you and you ONLY need these for building out the gateway.
 # The credentials that we sent you are the ones that you use for you polling logic and sending status updates to Dispatch - these are unique to you
 test_data_generation_id = "account|110|noop"
-test_data_generation_key = "account_key"
+
 
 headers = {
     'Content-Type': 'application/json',
@@ -73,7 +72,7 @@ payload = r"""
         }
     }
 ]
-""" % (test_org_id, external_id, external_id, external_id)
+""" % (test_org_id, brand_job_id, brand_job_id, brand_job_id)
 
 payload = gzip.compress(payload.encode())   
 secret_key = bytearray.fromhex(test_data_generation_key)  
