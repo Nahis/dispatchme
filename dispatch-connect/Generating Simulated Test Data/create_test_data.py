@@ -7,18 +7,24 @@ import hmac
 import hashlib
 import gzip
 
-# The public key/secret in this section simulates what the keys given to the enterprise
-# (i.e. these are just for setting up test data). Therefore, please leave these as they are
-secret_key = 'ask_for_secret'
+#  Make sure to change the external_id for every run. Otherwise when
+#  you run again, it will update rather than insert a new record
+external_id = "some_unique_id"
+
+
+test_org_id = 00000
+
+# The next two lines are to generate test data for your testing. DO NOT CHANGE these values - these are for simulating what the brand (e.g. AHS) 
+# will send you and you ONLY need these for building out the gateway.
+# The credentials that we sent you are the ones that you use for you polling logic and sending status updates to Dispatch - these are unique to you
+test_data_generation_id = "account|110|noop"
+test_data_generation_key = "account_key"
+
 headers = {
     'Content-Type': 'application/json',
-    'X-Dispatch-Key': 'account|110|noop'
+    'X-Dispatch-Key': test_data_generation_id
 }
 
-# Please note:
-# 1. Use the <external_organization_id> that we provide you in the introductory email
-# 2. Make sure to change the <external_id> for every run. If you don't and run again, it will 
-#    update rather than insert a new record
 payload = r"""
 [
     {
@@ -27,12 +33,12 @@ payload = r"""
             "version": "v3"
         },
         "record":{
-            "external_organization_id": "your_company_name",
-            "title": "some title - give a decent name for identifying",
+            "organization_id": %s,
+            "external_id": "%s",
+            "title": "job %s",
             "source": "web",
             "status": "offered",
             "description": "some description",
-            "external_id": "some_unique_job_id",
             "address":{
                 "postal_code": "01235",
                 "city": "Boston",
@@ -44,7 +50,7 @@ payload = r"""
             "customer": {
                 "first_name": "Jason",
                 "last_name": "Davis",
-                "external_id": "some_unique_customer_id",
+                "external_id": "%s",
                 "email": "devs+jasondavis@dispatch.me",
                 "home_address": {
                         "street_1": "71601 Ford Street",
@@ -67,10 +73,10 @@ payload = r"""
         }
     }
 ]
-"""
+""" % (test_org_id, external_id, external_id, external_id)
 
 payload = gzip.compress(payload.encode())   
-secret_key = bytearray.fromhex(secret_key)  
+secret_key = bytearray.fromhex(test_data_generation_key)  
 digester = hmac.new(secret_key, payload, hashlib.sha256)
 headers['X-Dispatch-Signature'] = binascii.hexlify(digester.digest()).decode('utf-8')
 post = requests.post('https://connect-sbx.dispatch.me/agent/in', headers=headers, data=payload)
