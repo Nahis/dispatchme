@@ -19,6 +19,7 @@ def xform(msg, config):
 
     data = msg["payload"]["data"]
     entity = "customer"
+    source_id = data["source_id"] if data["source_id"] else ""
     customer_id = data["customer_id"]
     customer = data[entity]
     address = data["address"]
@@ -70,7 +71,7 @@ def xform(msg, config):
         external_id = data["external_ids"][0].split(":")[1] if data["external_ids"] else ""
     source = "%s:" % data["source"] if data["source"] else ""
     title = "%s%s %s" % (source, external_id, title)
-    desc = "%s\n\n%s" % (title, data["description"])
+    desc = "%s\n\n%s" % (title, xform_description(data["description"]))
     if "equipment_descriptions" in data:
         for equipment in data["equipment_descriptions"]:
             desc += format_text("Manufacturer", equipment, "manufacturer")
@@ -245,3 +246,9 @@ def find_customer(host, headers, params, search_by):
                 return customer_id
     return None
 """
+
+
+def xform_description(desc):
+    desc = desc.replace("\n\n", "\n")
+    desc = desc.replace("**", "")
+    return desc
