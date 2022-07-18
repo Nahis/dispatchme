@@ -23,7 +23,7 @@ curl_setopt_array($curl, array(
         "Content-Type: application/json",
         "X-Dispatch-Key: $key",
         "X-Dispatch-Signature: $sign",
-        "MessageId": "unique_id_for_transaction"  // optional                
+        "MessageId: unique_id_for_transaction",  // optional
         "RecordType: job"  // The would be `organization`, `user` etc. (any identifying value is acceptable) depending on what you're trying to send over. Refer to the playbook
     ),
 ));
