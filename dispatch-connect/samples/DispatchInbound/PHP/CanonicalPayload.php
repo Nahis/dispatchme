@@ -84,7 +84,7 @@ curl_setopt_array($curl, array(
         "Content-Type: application/json",
         "X-Dispatch-Key: $key",
         "X-Dispatch-Signature: $sign",
-        "MessageId": "unique_id_for_transaction"  // optional
+        "MessageId: unique_id_for_transaction"  // optional
     ),
 ));
 $response = curl_exec($curl);
