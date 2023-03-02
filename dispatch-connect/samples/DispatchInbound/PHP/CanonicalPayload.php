@@ -66,6 +66,7 @@ $payloadData = '[
     }
 ]';
 // see Custom Payload for example that doesn't use curl
+#$compressed = gzencode(utf8_encode($payloadData));
 $compressed = gzencode(utf8_encode($payloadData));
 $secret = hex2bin($secret);
 $sign = hash_hmac('sha256', $compressed, $secret, true);
