@@ -15,7 +15,7 @@ brand_job_id = "some_unique_id"
 test_data_generation_key = "account_key"
 test_org_id = 00000
 
-# The credentials that we sent you are the ones that you use for you polling logic and sending status updates to Dispatch - these are unique to you
+# DO NOT CHANGE THIS!
 test_data_generation_id = "account|110|noop"
 
 
