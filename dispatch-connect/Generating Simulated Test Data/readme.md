@@ -9,4 +9,6 @@ Once you create your job:
 * You should be able to log into https://work-sandbox.dispatch.me with the credentials you've been provided to view it. This front end is a "view only" front end as for you are concerned to facilitate your testing
 * You should be able connect to the agent/out endpoint to pick it up and processinto your subsequently
 
+To simulate a cancelation payload coming from the brand you can use the same payload you used for creating the job and just change `"status": "canceled"` and send it over.
+
 Subsequently you can send updates by following the playbook.
